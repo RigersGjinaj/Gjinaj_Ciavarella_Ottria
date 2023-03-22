@@ -1,10 +1,9 @@
 <?php 
-
 class Classe{
+
     private $conn;
     private $table_name="class";
     public $id;
-
     public $year;
     public $section;
     public $spec;
@@ -59,20 +58,22 @@ class Classe{
         $query = "UPDATE
                 " . $this->table_name . "
             SET
-                dept_name = :name
+                year =: year, section =: section, spec =: spec
             WHERE
-                dept_id = :id";
+                id =: id";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
 
         // sanitize
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->id = htmlspecialchars(strip_tags($this->id));
-
+        $this->year = htmlspecialchars(strip_tags($this->year));
+        $this->section = htmlspecialchars(strip_tags($this->section));
+        $this->spec = htmlspecialchars(strip_tags($this->spec));
+        
         // bind new values
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':year', $this->year);
+        $stmt->bindParam(':section', $this->section);
+        $stmt->bindParam(':spec', $this->spec);
 
         // execute the query
         if ($stmt->execute()) {
@@ -82,13 +83,27 @@ class Classe{
         }
     }
 
+    function delete()
+    {
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->id);
+
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 
 }
-
-
-
-
-
-
-
 ?>
