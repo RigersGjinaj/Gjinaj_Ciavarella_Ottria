@@ -5,7 +5,7 @@ services:
         ports:
           - 8080:80
         volumes:
-          - ./cm:/var/www/html/rest
+          - ./cm:/var/www/html/cm
       db:
         image: mysql:5.7
         volumes:
