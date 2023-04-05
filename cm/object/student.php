@@ -8,7 +8,7 @@ class Student{
     public $surname;
     public $fiscal_code;
     public $birthday;
-    public $id_class;
+    public $class_id;
 
     public function __construct($db){
         $this->$conn = $db;
@@ -17,12 +17,12 @@ class Student{
     function read()
     {
         // query to select all
-        $query = "SELECT id, name, surname, fiscal_code, birthday, id_class
+        $query = "SELECT id, name, surname, fiscal_code, birthday, class_id
             FROM
                 " . $this->table_name . "
             ORDER BY id";
         // prepare query statement
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->$conn->prepare($query);
         // execute query
         $stmt->execute();
         return $stmt;
@@ -34,21 +34,21 @@ class Student{
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, id_class =: id_class";
+                name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, class_id =: class_id";
         // prepare query
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->$conn->prepare($query);
         // sanitize
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->surname = htmlspecialchars(strip_tags($this->surname));
         $this->fiscal_code = htmlspecialchars(strip_tags($this->fiscal_code));
         $this->birthday = htmlspecialchars(strip_tags($this->birthday));
-        $this->id_class = htmlspecialchars(strip_tags($this->id_class));
+        $this->class_id = htmlspecialchars(strip_tags($this->class_id));
         // bind values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":surname", $this->surname);
         $stmt->bindParam(":fiscal_code", $this->fiscal_code);
         $stmt->bindParam(":birthday", $this->birthday);
-        $stmt->bindParam(":id_class", $this->id_class);
+        $stmt->bindParam(":class_id", $this->class_id);
 
         // execute query
         if ($stmt->execute()) {
@@ -64,26 +64,26 @@ class Student{
         $query = "UPDATE
                 " . $this->table_name . "
             SET
-            name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, id_class =: id_class
+            name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, class_id =: class_id
             WHERE
                 id =: id";
 
         // prepare query statement
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->$conn->prepare($query);
 
         // sanitize
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->surname = htmlspecialchars(strip_tags($this->surname));
         $this->fiscal_code = htmlspecialchars(strip_tags($this->fiscal_code));
         $this->birthday = htmlspecialchars(strip_tags($this->birthday));
-        $this->id_class = htmlspecialchars(strip_tags($this->id_class));
+        $this->class_id = htmlspecialchars(strip_tags($this->class_id));
         
         // bind new values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":surname", $this->surname);
         $stmt->bindParam(":fiscal_code", $this->fiscal_code);
         $stmt->bindParam(":birthday", $this->birthday);
-        $stmt->bindParam(":id_class", $this->id_class);
+        $stmt->bindParam(":class_id", $this->class_id);
 
         // execute the query
         if ($stmt->execute()) {
@@ -99,7 +99,7 @@ class Student{
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
 
         // prepare query
-        $stmt = $this->conn->prepare($query);
+        $stmt = $this->$conn->prepare($query);
 
         // sanitize
         $this->id = htmlspecialchars(strip_tags($this->id));

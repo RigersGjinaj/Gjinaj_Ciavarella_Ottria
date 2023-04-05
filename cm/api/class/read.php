@@ -2,8 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once '../../db/db.php';
-include_once '../../object/class.php';
+include_once './db/db.php';
+include_once './object/class.php';
 
 $database = new Db();
 $db = $database->getConnection();
@@ -13,7 +13,8 @@ $class = new Classe($db);
 
 $stmt = $class->read();
 $num = $stmt->rowCount();
-
+echo $num;
+echo $stmt;
 if ($num > 0) {
     // department array
     $department_arr = array();
