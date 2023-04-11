@@ -13,8 +13,7 @@ $class = new Classe($db);
 
 $stmt = $class->read();
 $num = $stmt->rowCount();
-echo $num;
-echo $stmt;
+
 if ($num > 0) {
     // department array
     $department_arr = array();
@@ -29,14 +28,13 @@ if ($num > 0) {
             "year" => $row['year'],
             "section" => $row['section'],
             "spec" => $row['spec'],
-
         );
         array_push($department_arr["records"], $department_item);
     }
     echo json_encode($department_arr);
 } else {
     echo json_encode(
-            array("message" => "No products found.")
+            array("message" => "No class found.")
     );
 }
 
