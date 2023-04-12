@@ -23,6 +23,17 @@ class Classe{
         return $stmt;
     }
 
+    function readByID($id)
+    {
+        // query to select all
+        $query = "SELECT id, year, section, spec FROM " . $this->table_name . " WHERE id = ".$id."";
+        // prepare query statement
+        $stmt = $this->$conn->query($query);
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
+
     function create()
     {
         // query to insert record
@@ -49,16 +60,16 @@ class Classe{
         }
     }
 
-    function update()
+    function update($id)
     {
         // update query
         $query = "UPDATE
                 " . $this->table_name . "
             SET
-                year =: year, section =: section, spec =: spec
+                year =:year, section =:section, spec =:spec
             WHERE
-                id =: id";
-
+                id =:id";
+        echo $query;
         // prepare query statement
         $stmt = $this->$conn->prepare($query);
 
@@ -66,12 +77,13 @@ class Classe{
         $this->year = htmlspecialchars(strip_tags($this->year));
         $this->section = htmlspecialchars(strip_tags($this->section));
         $this->spec = htmlspecialchars(strip_tags($this->spec));
+        $this->id = htmlspecialchars(strip_tags($id));
         
         // bind new values
         $stmt->bindParam(':year', $this->year);
         $stmt->bindParam(':section', $this->section);
         $stmt->bindParam(':spec', $this->spec);
-
+        $stmt->bindParam(':id', $this->id);
         // execute the query
         if ($stmt->execute()) {
             return true;
@@ -80,19 +92,31 @@ class Classe{
         }
     }
 
-    function delete()
+    function delete($id)
     {
-        // delete query
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+        $query = "DELETE FROM student WHERE class_id = :id";
+        $stmt = $this->$conn->prepare($query);
 
+        // sanitize
+        $this->id = htmlspecialchars(strip_tags($id));
+
+        // bind id of record to delete
+        $stmt->bindParam(':id', $id);
+
+        // execute query
+        $stmt->execute();
+    
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        echo $query;
         // prepare query
         $stmt = $this->$conn->prepare($query);
 
         // sanitize
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->id = htmlspecialchars(strip_tags($id));
 
         // bind id of record to delete
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(':id', $id);
 
         // execute query
         if ($stmt->execute()) {

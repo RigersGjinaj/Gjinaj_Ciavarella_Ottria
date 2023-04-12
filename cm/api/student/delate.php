@@ -5,8 +5,8 @@ header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once '../../db/db.php';
-include_once '../../object/student.php';
+include_once './db/db.php';
+include_once './object/student.php';
 
 
 $database = new Db();
@@ -16,7 +16,7 @@ $student = new Student($db);
 
 $student->id = filter_input(INPUT_GET, 'id');
 
-if ($student->create()) {
+if ($student->delete($student_id)) {
     echo '{';
     echo '"message": "Student was deleted."';
     echo '}';

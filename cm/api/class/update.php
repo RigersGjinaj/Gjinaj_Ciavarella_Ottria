@@ -5,8 +5,8 @@ header("Access-Control-Allow-Methods: PUT");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once '../../db/db.php';
-include_once '../../object/class.php';
+include_once './db/db.php';
+include_once './object/class.php';
 
 $database = new Db();
 $db = $database->getConnection();
@@ -16,12 +16,11 @@ $class = new Classe($db);
 
 $data = json_decode(file_get_contents("php://input", true));
 
-$class->id = $data->id;
 $class->year = $data->year;
 $class->section = $data->section;
 $class->spec = $data->spec;
 
-if ($class->update()) {
+if ($class->update($class_id)) {
     echo '{';
     echo '"message": "Class was updated."';
     echo '}';

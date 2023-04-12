@@ -27,6 +27,16 @@ class Student{
         $stmt->execute();
         return $stmt;
     }
+    function readByID($id)
+    {
+        // query to select all
+        $query = "SELECT id, name, surname, fiscal_code, birthday, class_id FROM " . $this->table_name . " WHERE id = ".$id."";
+        // prepare query statement
+        $stmt = $this->$conn->query($query);
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
 
     function create()
     {
@@ -58,32 +68,33 @@ class Student{
         }
     }
 
-    function update()
+    function update($id)
     {
         // update query
         $query = "UPDATE
                 " . $this->table_name . "
             SET
-            name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, class_id =: class_id
+            name =:name, surname =:surname, fiscal_code =:fiscal_code, birthday =:birthday, class_id =:class_id
             WHERE
-                id =: id";
-
+                id =:id";
         // prepare query statement
         $stmt = $this->$conn->prepare($query);
 
         // sanitize
-        $this->name = htmlspecialchars(strip_tags($this->name));
+        // $this->name = (strip_tags($this->name));
         $this->surname = htmlspecialchars(strip_tags($this->surname));
         $this->fiscal_code = htmlspecialchars(strip_tags($this->fiscal_code));
         $this->birthday = htmlspecialchars(strip_tags($this->birthday));
         $this->class_id = htmlspecialchars(strip_tags($this->class_id));
-        
+        $this->id = htmlspecialchars(strip_tags($id));
+
         // bind new values
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":surname", $this->surname);
-        $stmt->bindParam(":fiscal_code", $this->fiscal_code);
-        $stmt->bindParam(":birthday", $this->birthday);
-        $stmt->bindParam(":class_id", $this->class_id);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':surname', $this->surname);
+        $stmt->bindParam(':fiscal_code', $this->fiscal_code);
+        $stmt->bindParam(':birthday', $this->birthday);
+        $stmt->bindParam(':class_id', $this->class_id);
+        $stmt->bindParam(':id', $this->id);
 
         // execute the query
         if ($stmt->execute()) {
@@ -93,10 +104,10 @@ class Student{
         }
     }
 
-    function delete()
+    function delete($id)
     {
         // delete query
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
 
         // prepare query
         $stmt = $this->$conn->prepare($query);
@@ -105,7 +116,7 @@ class Student{
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         // bind id of record to delete
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(":id", $id);
 
         // execute query
         if ($stmt->execute()) {
