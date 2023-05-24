@@ -31,7 +31,7 @@ switch ($uri[1]) {
             break;
       }	 
    break;
-   case 'student' :
+   case 'students' :
        switch ( $method ) {
          case 'GET' : 
             if (count($uri) > 2) {
