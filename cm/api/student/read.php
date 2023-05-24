@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://127.0.0.1:5173");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once './db/db.php';
@@ -28,7 +28,10 @@ if ($num > 0) {
             "surname" => $row['surname'],
             "fiscal_code" => $row['fiscal_code'],
             "birthday" => $row['birthday'],
-            "class_id" => $row['class_id']
+            "class_id" => $row['class_id'],
+            "year" => $row['year'],
+            "section" => $row['section'],
+            "spec" => $row['spec']
         );
         array_push($department_arr["records"], $department_item);
     }
