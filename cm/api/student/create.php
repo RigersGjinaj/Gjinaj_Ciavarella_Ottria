@@ -21,7 +21,7 @@ $student->name = $data->name;
 $student->surname = $data->surname;
 $student->fiscal_code = $data->fiscal_code;
 $student->birthday = $data->birthday;
-$student->id_class = $data->id_class;
+$student->class_id = $data->class_id;
 
 if ($student->create()) {
     echo '{';

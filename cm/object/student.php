@@ -45,7 +45,7 @@ class Student{
         $query = "INSERT INTO
                 " . $this->table_name . "
             SET
-                name =: name, surname =: surname, fiscal_code =: fiscal_code, birthday =: birthday, class_id =: class_id";
+                name =:name, surname =:surname, fiscal_code =:fiscal_code, birthday =:birthday, class_id =:class_id";
         // prepare query
         $stmt = $this->$conn->prepare($query);
         // sanitize
@@ -60,7 +60,7 @@ class Student{
         $stmt->bindParam(":fiscal_code", $this->fiscal_code);
         $stmt->bindParam(":birthday", $this->birthday);
         $stmt->bindParam(":class_id", $this->class_id);
-
+        echo $query;
         // execute query
         if ($stmt->execute()) {
             return true;

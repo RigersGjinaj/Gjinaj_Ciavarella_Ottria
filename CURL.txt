@@ -4,3 +4,4 @@ curl -X POST -H "Content-Type: application/json" -d '{"year":5, "section":"c", "
 curl -X PUT -H "Content-Type: application/json" -d '{"year":4,"section":"c", "spec":"tl"}' localhost:8080/cm/class/2
 
 curl -X PUT -H "Content-Type: application/json" -d '{"name":"matteo","surname":"ottria", "fiscal_code":"ff1ff", "birthday":"2013-05-01", "class_id":1}' localhost:8080/cm/student/8
+curl -X POST -H "Content-Type: application/json" -d '{"name":"lorenzo","surname":"ciava", "fiscal_code":"pippo", "birthday":"2013-05-01", "class_id":1}' localhost:8080/cm/student
