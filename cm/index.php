@@ -1,10 +1,17 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization');
+header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
 $uri = ltrim($uri,"/");
 $uri = rtrim($uri,"/");
 $uri = explode("/",$uri);
+
 
 switch ($uri[1]) {
    case 'class' :
